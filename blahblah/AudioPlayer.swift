@@ -7,15 +7,58 @@
 //
 
 import SwiftUI
+import AVFoundation
+import Combine
 
-struct AudioPlayer: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
+    let objectWillChange = PassthroughSubject<AudioPlayer, Never>()
+    
+    var isPlaying = false {
+        didSet {
+            objectWillChange.send(self)
+        }
     }
-}
-
-struct AudioPlayer_Previews: PreviewProvider {
-    static var previews: some View {
-        AudioPlayer()
+    
+    var audioPlayer: AVAudioPlayer!
+    
+    func startPlayback (audio: URL) {
+        
+        let playbackSession = AVAudioSession.sharedInstance()
+        
+        do {
+            try playbackSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
+        } catch {
+            print("Playing over the device's speakers failed")
+        }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: audio)
+            audioPlayer.play()
+            isPlaying = true
+        } catch {
+            print("Playback failed.")
+        }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: audio)
+            audioPlayer.delegate = self
+            audioPlayer.play()
+            isPlaying = true
+        } catch {
+            print("Playback failed.")
+        }
     }
+    
+    func stopPlayback() {
+        audioPlayer.stop()
+        isPlaying = false
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if flag {
+            isPlaying = false
+        }
+    }
+    
+    
 }
