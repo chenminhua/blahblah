@@ -11,6 +11,16 @@ import Combine
 import AVFoundation
 
 
+let AvAudioRecorderSettings = [
+    AVFormatIDKey: Int(kAudioFormatMPEG4AAC),   // 格式
+    AVSampleRateKey: 12000,                     // 采样率
+    AVNumberOfChannelsKey: 1,                   // 声道数
+    AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue     // 编码清晰度
+]
+
+// specify the location where recording should be saved
+let AudioFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+
 class AudioRecorder: ObservableObject {
     // to notify observing views about changes
     let objectWillChange = PassthroughSubject<AudioRecorder, Never>()
@@ -25,7 +35,9 @@ class AudioRecorder: ObservableObject {
         }
     }
     
-    init() {}
+    init() {
+        fetchRecordings()
+    }
     
     // start a record session
     func startRecording() {
@@ -40,22 +52,12 @@ class AudioRecorder: ObservableObject {
             print("Failed to set up recording session")
         }
         
-        // specify the location where recording should be saved
-        let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        
         // the file should be named after the date and time of the recording and have the .m4a format
-        let audioFilename = documentPath.appendingPathComponent("\(Date().toString(dateFormat: "dd-MM-YY_'at'_HH:mm:ss")).m4a")
-        
-        let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 12000,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ]
+        let audioFilename = AudioFilePath.appendingPathComponent("\(Date().toString(dateFormat: "dd-MM-YY_'at'_HH:mm:ss")).m4a")
         
         // start the recording and inform views
         do {
-            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
+            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: AvAudioRecorderSettings)
             audioRecorder.record()
 
             recording = true
@@ -67,7 +69,6 @@ class AudioRecorder: ObservableObject {
     func stopRecording() {
         audioRecorder.stop()
         recording = false
-        
         fetchRecordings()
     }
     
