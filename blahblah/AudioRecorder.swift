@@ -63,6 +63,21 @@ class AudioRecorder: ObservableObject {
         do {
             audioRecorder = try AVAudioRecorder(url: genAvAudioFileURL(), settings: AvAudioRecorderSettings)
             audioRecorder.record()
+            
+            audioRecorder.isMeteringEnabled = true
+            
+            DispatchQueue.global(qos: .userInitiated).async {
+                while self.recording {
+                    self.audioRecorder.updateMeters()
+                    var peekPower = self.audioRecorder.averagePower(forChannel: 0)
+                    print("peekpower \(peekPower)")
+                    sleep(1)
+                    self.audioRecorder.updateMeters()
+                    peekPower = self.audioRecorder.averagePower(forChannel: 0)
+                    print("peekpower \(peekPower)")
+                }
+            }
+            
             recording = true
         } catch {
             print("Could not start recording")
