@@ -10,6 +10,8 @@ import Foundation
 import Combine
 import AVFoundation
 
+// AvAudioSession
+let AudioSession = AVAudioSession.sharedInstance()
 
 let AvAudioRecorderSettings = [
     AVFormatIDKey: Int(kAudioFormatMPEG4AAC),   // 格式
@@ -20,6 +22,12 @@ let AvAudioRecorderSettings = [
 
 // specify the location where recording should be saved
 let AudioFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+
+
+func genAvAudioFileURL() -> URL {
+    return AudioFilePath.appendingPathComponent("\(Date().toString(dateFormat: "dd-MM-YY_'at'_HH:mm:ss")).m4a")
+}
+
 
 class AudioRecorder: ObservableObject {
     // to notify observing views about changes
@@ -41,25 +49,20 @@ class AudioRecorder: ObservableObject {
     
     // start a record session
     func startRecording() {
-        // create a recording session
-        let recordingSession = AVAudioSession.sharedInstance()
         
+        print("start recording")
         // define the type for our recording session
         do {
-            try recordingSession.setCategory(.playAndRecord, mode: .default)
-            try recordingSession.setActive(true)
+            try AudioSession.setCategory(.playAndRecord, mode: .default)
+            try AudioSession.setActive(true)
         } catch {
             print("Failed to set up recording session")
         }
         
-        // the file should be named after the date and time of the recording and have the .m4a format
-        let audioFilename = AudioFilePath.appendingPathComponent("\(Date().toString(dateFormat: "dd-MM-YY_'at'_HH:mm:ss")).m4a")
-        
         // start the recording and inform views
         do {
-            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: AvAudioRecorderSettings)
+            audioRecorder = try AVAudioRecorder(url: genAvAudioFileURL(), settings: AvAudioRecorderSettings)
             audioRecorder.record()
-
             recording = true
         } catch {
             print("Could not start recording")
