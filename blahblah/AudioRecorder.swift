@@ -67,15 +67,13 @@ class AudioRecorder: ObservableObject {
             audioRecorder.isMeteringEnabled = true
             
             DispatchQueue.global(qos: .userInitiated).async {
+                var averagePowerList = [Float]()
                 while self.recording {
                     self.audioRecorder.updateMeters()
-                    var peekPower = self.audioRecorder.averagePower(forChannel: 0)
-                    print("peekpower \(peekPower)")
+                    averagePowerList.append(self.audioRecorder.averagePower(forChannel: 0))
                     sleep(1)
-                    self.audioRecorder.updateMeters()
-                    peekPower = self.audioRecorder.averagePower(forChannel: 0)
-                    print("peekpower \(peekPower)")
                 }
+                // make a file for store averagePowerList
             }
             
             recording = true
@@ -97,7 +95,8 @@ class AudioRecorder: ObservableObject {
         let directoryContents = try!fileManager.contentsOfDirectory(at: documentDirectory, includingPropertiesForKeys: nil)
         
         for audio in directoryContents {
-            let recording = Recording(fileURL: audio, createdAt: getCreationDate(for: audio))
+            // todo
+            let recording = Recording(fileURL: audio, createdAt: getCreationDate(for: audio), averagePowerList: [Float]())
             recordings.append(recording)
         }
         
