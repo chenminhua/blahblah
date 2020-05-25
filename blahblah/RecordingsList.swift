@@ -20,7 +20,7 @@ struct RecordingsList: View {
     var body: some View {
         return List {
             ForEach(recordings, id: \.id) { recording in
-                RecordingRow(audioURL: recording.genAvAudioFileURL())
+                RecordingRow(recording: recording)
             }
                 .onDelete(perform: delete)
         }
@@ -54,6 +54,15 @@ struct RecordingsList: View {
 
 struct RecordingsList_Previews: PreviewProvider {
     static var previews: some View {
-        RecordingsList()
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+        for _ in 1...4 {
+            var newr = Recording.init(context: context)
+            newr.recordedAt = Date()
+        }
+        
+       
+        return RecordingsList().environment(\.managedObjectContext, context)
+        
     }
 }
