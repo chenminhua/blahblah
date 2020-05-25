@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CB634519247BBD06005EF3AD /* recording.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CB634517247BBD06005EF3AD /* recording.xcdatamodeld */; };
+		CB63451F247C0367005EF3AD /* Recording+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63451E247C0367005EF3AD /* Recording+extension.swift */; };
 		CB8D17532478B990007A0833 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D17522478B990007A0833 /* AppDelegate.swift */; };
 		CB8D17552478B990007A0833 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D17542478B990007A0833 /* SceneDelegate.swift */; };
 		CB8D17572478B990007A0833 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D17562478B990007A0833 /* ContentView.swift */; };
@@ -16,7 +17,7 @@
 		CB8D175F2478B992007A0833 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB8D175D2478B992007A0833 /* LaunchScreen.storyboard */; };
 		CB8D176A2478B992007A0833 /* blahblahTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D17692478B992007A0833 /* blahblahTests.swift */; };
 		CB8D17752478B992007A0833 /* blahblahUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D17742478B992007A0833 /* blahblahUITests.swift */; };
-		CB8D17832478BA21007A0833 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D17822478BA21007A0833 /* AudioRecorder.swift */; };
+		CB8D17832478BA21007A0833 /* AudioRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D17822478BA21007A0833 /* AudioRecorderView.swift */; };
 		CB8D17852478BE59007A0833 /* RecordingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D17842478BE59007A0833 /* RecordingsList.swift */; };
 		CB8D17892478C594007A0833 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D17882478C594007A0833 /* Helper.swift */; };
 		CB8D178B2478CA6D007A0833 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D178A2478CA6D007A0833 /* AudioPlayer.swift */; };
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		CB634518247BBD06005EF3AD /* recordingmetadata.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = recordingmetadata.xcdatamodel; sourceTree = "<group>"; };
+		CB63451E247C0367005EF3AD /* Recording+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Recording+extension.swift"; sourceTree = "<group>"; };
 		CB8D174F2478B990007A0833 /* blahblah.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = blahblah.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB8D17522478B990007A0833 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB8D17542478B990007A0833 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,7 +57,7 @@
 		CB8D17702478B992007A0833 /* blahblahUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = blahblahUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB8D17742478B992007A0833 /* blahblahUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = blahblahUITests.swift; sourceTree = "<group>"; };
 		CB8D17762478B992007A0833 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CB8D17822478BA21007A0833 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
+		CB8D17822478BA21007A0833 /* AudioRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderView.swift; sourceTree = "<group>"; };
 		CB8D17842478BE59007A0833 /* RecordingsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsList.swift; sourceTree = "<group>"; };
 		CB8D17882478C594007A0833 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		CB8D178A2478CA6D007A0833 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
@@ -110,7 +112,8 @@
 			isa = PBXGroup;
 			children = (
 				CB8D17522478B990007A0833 /* AppDelegate.swift */,
-				CB8D17822478BA21007A0833 /* AudioRecorder.swift */,
+				CB8D17822478BA21007A0833 /* AudioRecorderView.swift */,
+				CB63451E247C0367005EF3AD /* Recording+extension.swift */,
 				CB8D17882478C594007A0833 /* Helper.swift */,
 				CB8D17542478B990007A0833 /* SceneDelegate.swift */,
 				CB8D178A2478CA6D007A0833 /* AudioPlayer.swift */,
@@ -287,8 +290,9 @@
 				CB8D17552478B990007A0833 /* SceneDelegate.swift in Sources */,
 				CB8D178B2478CA6D007A0833 /* AudioPlayer.swift in Sources */,
 				CB634519247BBD06005EF3AD /* recording.xcdatamodeld in Sources */,
+				CB63451F247C0367005EF3AD /* Recording+extension.swift in Sources */,
 				CB8D17852478BE59007A0833 /* RecordingsList.swift in Sources */,
-				CB8D17832478BA21007A0833 /* AudioRecorder.swift in Sources */,
+				CB8D17832478BA21007A0833 /* AudioRecorderView.swift in Sources */,
 				CB8D17572478B990007A0833 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

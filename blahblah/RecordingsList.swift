@@ -12,13 +12,15 @@ struct RecordingsList: View {
     
     @Environment(\.managedObjectContext) var moc
     
-    @FetchRequest(entity: Recording.entity(), sortDescriptors: [])
+    @FetchRequest(entity: Recording.entity(), sortDescriptors: [
+        NSSortDescriptor(keyPath: \Recording.recordedAt, ascending: false)
+    ])
     var recordings: FetchedResults<Recording>
     
     var body: some View {
         return List {
             ForEach(recordings, id: \.id) { recording in
-                RecordingRow(audioURL: recording.fileURL!)
+                RecordingRow(audioURL: recording.genAvAudioFileURL())
             }
                 .onDelete(perform: delete)
         }
@@ -38,7 +40,7 @@ struct RecordingsList: View {
             // 删除文件
             let recording = recordings.filter { $0.id == uuid }[0]
             do {
-                try FileManager.default.removeItem(at: recording.fileURL!)
+                try FileManager.default.removeItem(at: recording.genAvAudioFileURL())
             } catch {
                 print("File could not be deleted!")
             }
