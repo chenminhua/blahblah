@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import AVFoundation
+import SwiftUI
 
 // AvAudioSession
 let AudioSession = AVAudioSession.sharedInstance()
@@ -24,9 +25,7 @@ let AvAudioRecorderSettings = [
 let AudioFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
 
 
-func genAvAudioFileURL() -> URL {
-    return AudioFilePath.appendingPathComponent("\(Date().toString(dateFormat: "dd-MM-YY_'at'_HH:mm:ss")).m4a")
-}
+
 
 
 class AudioRecorder: ObservableObject {
@@ -35,17 +34,26 @@ class AudioRecorder: ObservableObject {
     
     var audioRecorder: AVAudioRecorder!
     
-    var recordings = [Recording]()
+    @FetchRequest(entity: Recording.entity(), sortDescriptors: [])
+    var recordings: FetchedResults<Recording>
+    
+    var recordedAt: Date?
+    var fileurl: URL?
+    
+    @Environment(\.managedObjectContext) var moc
     
     var recording = false {
         didSet {
             objectWillChange.send(self)
+            if recording == false {
+                recordedAt = nil
+                fileurl = nil
+            }
         }
     }
     
-    init() {
-        fetchRecordings()
-    }
+    
+    init() {}
     
     // start a record session
     func startRecording() {
@@ -61,7 +69,9 @@ class AudioRecorder: ObservableObject {
         
         // start the recording and inform views
         do {
-            audioRecorder = try AVAudioRecorder(url: genAvAudioFileURL(), settings: AvAudioRecorderSettings)
+            self.recordedAt = Date()
+            self.fileurl = genAvAudioFileURL()
+            audioRecorder = try AVAudioRecorder(url: self.fileurl!, settings: AvAudioRecorderSettings)
             audioRecorder.record()
             
             audioRecorder.isMeteringEnabled = true
@@ -84,25 +94,11 @@ class AudioRecorder: ObservableObject {
     
     func stopRecording() {
         audioRecorder.stop()
+        let newRecording = Recording()
+        try? self.moc.save()
         recording = false
-        fetchRecordings()
     }
-    
-    func fetchRecordings() {
-        recordings.removeAll()
-        let fileManager = FileManager.default
-        let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let directoryContents = try!fileManager.contentsOfDirectory(at: documentDirectory, includingPropertiesForKeys: nil)
-        
-        for audio in directoryContents {
-            // todo
-            let recording = Recording(fileURL: audio, createdAt: getCreationDate(for: audio), averagePowerList: [Float]())
-            recordings.append(recording)
-        }
-        
-        recordings.sort(by: { $0.createdAt.compare($1.createdAt) == .orderedAscending})
-        objectWillChange.send(self)
-    }
+
     
     func deleteRecording(urlsToDelete: [URL]) {
         
@@ -115,8 +111,12 @@ class AudioRecorder: ObservableObject {
             }
         }
         
-        fetchRecordings()
+//        fetchRecordings()
         
+    }
+    
+    func genAvAudioFileURL() -> URL {
+        return AudioFilePath.appendingPathComponent("\(self.recordedAt!.toString(dateFormat: "dd-MM-YY_'at'_HH:mm:ss")).m4a")
     }
 }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB634519247BBD06005EF3AD /* recording.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CB634517247BBD06005EF3AD /* recording.xcdatamodeld */; };
 		CB8D17532478B990007A0833 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D17522478B990007A0833 /* AppDelegate.swift */; };
 		CB8D17552478B990007A0833 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D17542478B990007A0833 /* SceneDelegate.swift */; };
 		CB8D17572478B990007A0833 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D17562478B990007A0833 /* ContentView.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CB634518247BBD06005EF3AD /* recordingmetadata.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = recordingmetadata.xcdatamodel; sourceTree = "<group>"; };
 		CB8D174F2478B990007A0833 /* blahblah.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = blahblah.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB8D17522478B990007A0833 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB8D17542478B990007A0833 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				CB8D17542478B990007A0833 /* SceneDelegate.swift */,
 				CB8D178A2478CA6D007A0833 /* AudioPlayer.swift */,
 				CB8D17562478B990007A0833 /* ContentView.swift */,
+				CB634517247BBD06005EF3AD /* recording.xcdatamodeld */,
 				CB8D17862478C455007A0833 /* RecordingDataModel.swift */,
 				CB8D17842478BE59007A0833 /* RecordingsList.swift */,
 				CB8D17582478B992007A0833 /* Assets.xcassets */,
@@ -286,6 +289,7 @@
 				CB8D17892478C594007A0833 /* Helper.swift in Sources */,
 				CB8D17552478B990007A0833 /* SceneDelegate.swift in Sources */,
 				CB8D178B2478CA6D007A0833 /* AudioPlayer.swift in Sources */,
+				CB634519247BBD06005EF3AD /* recording.xcdatamodeld in Sources */,
 				CB8D17852478BE59007A0833 /* RecordingsList.swift in Sources */,
 				CB8D17872478C455007A0833 /* RecordingDataModel.swift in Sources */,
 				CB8D17832478BA21007A0833 /* AudioRecorder.swift in Sources */,
@@ -614,6 +618,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CB634517247BBD06005EF3AD /* recording.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CB634518247BBD06005EF3AD /* recordingmetadata.xcdatamodel */,
+			);
+			currentVersion = CB634518247BBD06005EF3AD /* recordingmetadata.xcdatamodel */;
+			path = recording.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CB8D17472478B990007A0833 /* Project object */;
 }

@@ -7,9 +7,9 @@
 //
 
 import Foundation
-
-struct Recording {
-    let fileURL: URL
-    let createdAt: Date
-    let averagePowerList: [Float]
-}
+//
+//struct Recording {
+//    let fileURL: URL
+//    let createdAt: Date
+//    let averagePowerList: [Float]
+//}

@@ -14,8 +14,8 @@ struct RecordingsList: View {
     
     var body: some View {
         List {
-            ForEach(audioRecorder.recordings, id: \.createdAt) { recording in
-                RecordingRow(audioURL: recording.fileURL)
+            ForEach(audioRecorder.recordings, id: \.id) { recording in
+                RecordingRow(audioURL: recording.fileURL!)
             }
                 .onDelete(perform: delete)
         }
@@ -24,7 +24,7 @@ struct RecordingsList: View {
     func delete(at offsets: IndexSet) {
         var urlsToDelete = [URL]()
         for index in offsets {
-            urlsToDelete.append(audioRecorder.recordings[index].fileURL)
+            urlsToDelete.append(audioRecorder.recordings[index].fileURL!)
         }
         audioRecorder.deleteRecording(urlsToDelete: urlsToDelete)
     }
