@@ -10,11 +10,14 @@ import SwiftUI
 
 struct RecordingsList: View {
     
-    @ObservedObject var audioRecorder: AudioRecorder
+    @Environment(\.managedObjectContext) var moc
+    
+    @FetchRequest(entity: Recording.entity(), sortDescriptors: [])
+    var recordings: FetchedResults<Recording>
     
     var body: some View {
-        List {
-            ForEach(audioRecorder.recordings, id: \.id) { recording in
+        return List {
+            ForEach(recordings, id: \.id) { recording in
                 RecordingRow(audioURL: recording.fileURL!)
             }
                 .onDelete(perform: delete)
@@ -22,11 +25,27 @@ struct RecordingsList: View {
     }
     
     func delete(at offsets: IndexSet) {
-        var urlsToDelete = [URL]()
+        var uuids = [UUID]()
         for index in offsets {
-            urlsToDelete.append(audioRecorder.recordings[index].fileURL!)
+            uuids.append(recordings[index].id!)
         }
-        audioRecorder.deleteRecording(urlsToDelete: urlsToDelete)
+        deleteRecording(uuids: uuids)
+    }
+    
+    func deleteRecording(uuids: [UUID]) {
+
+        for uuid in uuids {
+            // 删除文件
+            let recording = recordings.filter { $0.id == uuid }[0]
+            do {
+                try FileManager.default.removeItem(at: recording.fileURL!)
+            } catch {
+                print("File could not be deleted!")
+            }
+            moc.delete(recording)
+            try? moc.save()
+            
+        }
     }
     
     
@@ -65,6 +84,6 @@ struct RecordingRow: View {
 
 struct RecordingsList_Previews: PreviewProvider {
     static var previews: some View {
-        RecordingsList(audioRecorder: AudioRecorder())
+        RecordingsList()
     }
 }

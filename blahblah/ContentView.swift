@@ -11,13 +11,18 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var audioRecorder: AudioRecorder
     
+    @Environment(\.managedObjectContext) var moc
+    
+    
     var body: some View {
         NavigationView {
             VStack {
-                RecordingsList(audioRecorder: audioRecorder)
+                RecordingsList()
                 
                 Button(action: audioRecorder.recording == false ? {self.audioRecorder.startRecording()} :
-                {self.audioRecorder.stopRecording()}) {
+                {
+                    print(type(of: self.moc))
+                    self.audioRecorder.stopRecording(moc: self.moc)}) {
                     Image(systemName: audioRecorder.recording == false ?
                         "circle.fill" : "stop.fill")
                         .resizable()

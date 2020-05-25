@@ -10,6 +10,7 @@ import Foundation
 import Combine
 import AVFoundation
 import SwiftUI
+import CoreData
 
 // AvAudioSession
 let AudioSession = AVAudioSession.sharedInstance()
@@ -24,24 +25,16 @@ let AvAudioRecorderSettings = [
 // specify the location where recording should be saved
 let AudioFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
 
-
-
-
-
 class AudioRecorder: ObservableObject {
+    @Environment(\.managedObjectContext) var moc
     // to notify observing views about changes
     let objectWillChange = PassthroughSubject<AudioRecorder, Never>()
     
     var audioRecorder: AVAudioRecorder!
     
-    @FetchRequest(entity: Recording.entity(), sortDescriptors: [])
-    var recordings: FetchedResults<Recording>
-    
     var recordedAt: Date?
     var fileurl: URL?
-    
-    @Environment(\.managedObjectContext) var moc
-    
+        
     var recording = false {
         didSet {
             objectWillChange.send(self)
@@ -52,12 +45,11 @@ class AudioRecorder: ObservableObject {
         }
     }
     
-    
     init() {}
     
     // start a record session
     func startRecording() {
-        
+
         print("start recording")
         // define the type for our recording session
         do {
@@ -66,16 +58,16 @@ class AudioRecorder: ObservableObject {
         } catch {
             print("Failed to set up recording session")
         }
-        
+
         // start the recording and inform views
         do {
             self.recordedAt = Date()
             self.fileurl = genAvAudioFileURL()
             audioRecorder = try AVAudioRecorder(url: self.fileurl!, settings: AvAudioRecorderSettings)
             audioRecorder.record()
-            
+
             audioRecorder.isMeteringEnabled = true
-            
+
             DispatchQueue.global(qos: .userInitiated).async {
                 var averagePowerList = [Float]()
                 while self.recording {
@@ -85,35 +77,27 @@ class AudioRecorder: ObservableObject {
                 }
                 // make a file for store averagePowerList
             }
-            
+
             recording = true
         } catch {
             print("Could not start recording")
         }
     }
     
-    func stopRecording() {
+    func stopRecording(moc: NSManagedObjectContext) {
         audioRecorder.stop()
-        let newRecording = Recording()
-        try? self.moc.save()
+        // id, recordedAt, fileURL, duration, averagePowerList
+        let newRecording = Recording(context: moc)
+        newRecording.id = UUID()
+        newRecording.recordedAt = recordedAt
+        newRecording.fileURL = fileurl
+        newRecording.duration = Int32(Date().distance(to: recordedAt!))
+        try! moc.save()
         recording = false
     }
 
     
-    func deleteRecording(urlsToDelete: [URL]) {
-        
-        for url in urlsToDelete {
-            print(url)
-            do {
-               try FileManager.default.removeItem(at: url)
-            } catch {
-                print("File could not be deleted!")
-            }
-        }
-        
-//        fetchRecordings()
-        
-    }
+
     
     func genAvAudioFileURL() -> URL {
         return AudioFilePath.appendingPathComponent("\(self.recordedAt!.toString(dateFormat: "dd-MM-YY_'at'_HH:mm:ss")).m4a")
