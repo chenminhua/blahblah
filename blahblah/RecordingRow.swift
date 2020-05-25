@@ -17,13 +17,14 @@ struct RecordingRow: View {
     
     var body: some View {
         HStack {
-//            Text("\(audioURL.lastPathComponent)")
-//            Spacer()
-            //Text("\(audioURL.lastPathComponent)")
+
             Text("\(recording.recordedAt!.toString(dateFormat: "yyyy-MM-dd hh:mm:ss"))")
             Spacer()
             if audioPlayer.isPlaying == false {
                 Button(action: {
+                    // print aveagePowerList
+                    let res = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(self.recording.averagePowerList!) as? [Float]
+                    print(res)
                     self.audioPlayer.startPlayback(audio: self.recording.genAvAudioFileURL())
                 }) {
                     Image(systemName: "play.circle")
