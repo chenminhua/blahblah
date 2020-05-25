@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CB634519247BBD06005EF3AD /* recording.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CB634517247BBD06005EF3AD /* recording.xcdatamodeld */; };
 		CB63451F247C0367005EF3AD /* Recording+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63451E247C0367005EF3AD /* Recording+extension.swift */; };
+		CB634521247C0534005EF3AD /* RecordingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB634520247C0534005EF3AD /* RecordingRow.swift */; };
 		CB8D17532478B990007A0833 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D17522478B990007A0833 /* AppDelegate.swift */; };
 		CB8D17552478B990007A0833 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D17542478B990007A0833 /* SceneDelegate.swift */; };
 		CB8D17572478B990007A0833 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8D17562478B990007A0833 /* ContentView.swift */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		CB634518247BBD06005EF3AD /* recordingmetadata.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = recordingmetadata.xcdatamodel; sourceTree = "<group>"; };
 		CB63451E247C0367005EF3AD /* Recording+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Recording+extension.swift"; sourceTree = "<group>"; };
+		CB634520247C0534005EF3AD /* RecordingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingRow.swift; sourceTree = "<group>"; };
 		CB8D174F2478B990007A0833 /* blahblah.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = blahblah.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB8D17522478B990007A0833 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB8D17542478B990007A0833 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				CB8D17562478B990007A0833 /* ContentView.swift */,
 				CB634517247BBD06005EF3AD /* recording.xcdatamodeld */,
 				CB8D17842478BE59007A0833 /* RecordingsList.swift */,
+				CB634520247C0534005EF3AD /* RecordingRow.swift */,
 				CB8D17582478B992007A0833 /* Assets.xcassets */,
 				CB8D175D2478B992007A0833 /* LaunchScreen.storyboard */,
 				CB8D17602478B992007A0833 /* Info.plist */,
@@ -289,6 +292,7 @@
 				CB8D17892478C594007A0833 /* Helper.swift in Sources */,
 				CB8D17552478B990007A0833 /* SceneDelegate.swift in Sources */,
 				CB8D178B2478CA6D007A0833 /* AudioPlayer.swift in Sources */,
+				CB634521247C0534005EF3AD /* RecordingRow.swift in Sources */,
 				CB634519247BBD06005EF3AD /* recording.xcdatamodeld in Sources */,
 				CB63451F247C0367005EF3AD /* Recording+extension.swift in Sources */,
 				CB8D17852478BE59007A0833 /* RecordingsList.swift in Sources */,
